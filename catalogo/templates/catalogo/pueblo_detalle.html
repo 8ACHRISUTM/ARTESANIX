@@ -1,0 +1,80 @@
+{% extends 'catalogo/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Banner del Pueblo -->
+<section class="py-5 bg-white border-bottom border-light">
+    <div class="container py-lg-4">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <div class="detail-img-wrapper shadow-sm">
+                    {% if pueblo.imagen %}
+                        <img src="{{ pueblo.imagen.url }}" class="img-fluid w-100" alt="{{ pueblo.nombre }}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-5 offset-lg-1 text-center text-lg-start">
+                <span class="text-accent fw-bold text-uppercase small ls-wide mb-2 d-block">Pueblo Mágico</span>
+                <h1 class="display-3 mb-4">{{ pueblo.nombre }}</h1>
+                <p class="text-muted small"><i class="fas fa-map-marker-alt me-2 text-accent"></i> {{ pueblo.estado }}</p>
+                <div class="mt-4 py-3 border-top border-light d-none d-lg-block">
+                    <p class="mb-0 text-muted fst-italic">Descubre la esencia y tradición artesanal de {{ pueblo.nombre }}.</p>
+                    <p class="mt-2 text-secondary small"><i class="fas fa-location-arrow me-1 text-accent"></i> {{ pueblo.ubicacion|default:"" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Historia y Cultura -->
+<section class="py-5">
+    <div class="container py-lg-5 text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="mb-5">
+                    <h3 class="mb-4 section-title">Nuestra Historia</h3>
+                    <p class="lh-lg text-secondary">{{ pueblo.historia|default:"La historia de este pueblo mágico está llena de color y tradición ancestral." }}</p>
+                </div>
+                
+                <div class="mb-5">
+                    <h3 class="mb-4 section-title">Esencia Cultural</h3>
+                    <p class="lh-lg text-secondary">{{ pueblo.descripcion_cultural|default:"Descubre la riqueza cultural y las técnicas artesanales que definen a esta región." }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Productos Locales -->
+<section class="py-5 bg-paper">
+    <div class="container py-lg-4">
+        <div class="section-title text-center">
+            <h2 class="display-5">Artesanías Regionales</h2>
+        </div>
+        
+        <div class="row g-4 mt-4">
+            {% for p in productos %}
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                    <div class="img-container">
+                        {% if p.fotografia %}
+                            <img src="{{ p.fotografia.url }}" alt="{{ p.nombre }}">
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <a href="{% url 'producto_detalle' p.pk %}" class="text-decoration-none stretched-link">
+                            <h5 class="mb-1 fw-bold text-artisan-dark fs-6">{{ p.nombre }}</h5>
+                        </a>
+                        <p class="product-price mb-0">${{ p.costo }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <p class="text-muted">Próximamente más piezas exclusivas de {{ pueblo.nombre }}.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

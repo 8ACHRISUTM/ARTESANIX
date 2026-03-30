@@ -1,0 +1,89 @@
+{% extends 'catalogo/base.html' %}
+{% load static %}
+
+{% block title %}Catálogo - Artesanix{% endblock %}
+
+{% block content %}
+<!-- Banner Colección -->
+<section class="position-relative text-center d-flex align-items-center justify-content-center" style="height: 35vh; min-height: 250px; overflow: hidden;">
+    <img src="/media/productos/Gemini_Generated_Image_llcgv8llcgv8llcg.png" class="position-absolute w-100 h-100 top-0 start-0" style="object-fit: cover; filter: brightness(0.65);" alt="Fondo Colección">
+    
+    <div class="position-relative z-1">
+        <h1 class="display-4 brand-font text-white mb-0" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.5);">Nuestra Colección</h1>
+        <div style="width: 80px; height: 3px; background-color: var(--accent); margin: 15px auto 0; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+    </div>
+</section>
+
+<section class="py-5 bg-artisan-bg min-vh-100">
+    <div class="container py-lg-4">
+
+        <!-- Búsqueda y Filtros  -->
+        <div class="search-container shadow-sm border-0 mb-5">
+            <form method="get" action="{% url 'catalogo' %}" class="row g-2 align-items-center">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="fas fa-search"></i></span>
+                        <input type="text" name="q" class="form-control border-start-0 ps-0" placeholder="Buscar..." value="{% if q %}{{ q }}{% endif %}">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select name="pueblo" class="form-select text-muted">
+                        <option value="">Filtra por: Pueblo Mágico</option>
+                        {% for p in pueblos %}
+                        <option value="{{ p.id }}" {% if p.id == pueblo_sel %}selected{% endif %}>{{ p.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="categoria" class="form-select text-muted">
+                        <option value="">Categoría</option>
+                        {% for c in categorias %}
+                        <option value="{{ c.id }}" {% if c.id == cat_sel %}selected{% endif %}>{{ c.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button type="submit" class="btn btn-accent px-0"><i class="fas fa-filter text-white"></i></button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Grid de Productos -->
+        <div class="row g-4">
+            {% if productos %}
+                {% for p in productos %}
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="product-card h-100 position-relative">
+                        <div class="img-container">
+                            {% if p.fotografia %}
+                                <img src="{{ p.fotografia.url }}" alt="{{ p.nombre }}">
+                            {% else %}
+                                <img src="https://via.placeholder.com/400x400?text={{ p.nombre }}" alt="{{ p.nombre }}">
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Favorito -->
+                        <a href="{% url 'toggle_favorito' p.pk %}" class="fav-btn shadow-sm stretched-link-bypass position-absolute" style="z-index: 10;" title="{% if p.id in favoritos_ids %}Quitar de favoritos{% else %}Agregar a favoritos{% endif %}">
+                            <i class="{% if p.id in favoritos_ids %}fas text-heart{% else %}far text-muted{% endif %} fa-heart"></i>
+                        </a>
+                        
+                        <div class="card-body px-3 py-3 text-start bg-white">
+                            <a href="{% url 'producto_detalle' p.pk %}" class="text-decoration-none stretched-link">
+                                <h5 class="mb-1 fw-bold text-artisan-dark fs-6">{{ p.nombre }}</h5>
+                            </a>
+                            <p class="product-price mb-0">${{ p.costo }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 py-5 text-center">
+                    <h4 class="text-secondary">No encontramos productos con esos filtros.</h4>
+                    <p class="text-muted">Intenta con otros términos o pueblos.</p>
+                    <a href="{% url 'catalogo' %}" class="btn btn-outline-accent rounded-pill px-4 mt-2">Limpiar filtros</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

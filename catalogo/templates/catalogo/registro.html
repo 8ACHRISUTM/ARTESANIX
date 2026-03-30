@@ -1,0 +1,57 @@
+{% extends 'catalogo/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-5 bg-artisan-bg min-vh-100 d-flex align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="text-center mb-5">
+                    <h1 class="display-5 brand-font text-artisan-dark">Únete a nosotros</h1>
+                    <p class="text-muted">Crea tu cuenta en Artesanix</p>
+                </div>
+                
+                <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm border border-light text-start">
+                    <form method="post" class="artisan-form">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="mb-4">
+                                <label class="form-label small text-muted mb-1">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <div class="form-text small op-50">{{ field.help_text }}</div>
+                                {% endif %}
+                                {% for error in field.errors %}
+                                    <div class="text-danger small mt-1">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                        <div class="d-grid mt-5">
+                            <button type="submit" class="btn btn-accent btn-lg text-white">Registrarse</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <p class="small text-muted mb-0">¿Ya eres parte de nosotros? <a href="{% url 'login' %}" class="text-accent fw-bold text-decoration-none">Inicia sesión</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.artisan-form input, .artisan-form select, .artisan-form textarea {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    background-color: var(--artisan-bg);
+    color: var(--artisan-text);
+}
+.artisan-form input:focus, .artisan-form select:focus, .artisan-form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+</style>
+{% endblock %}

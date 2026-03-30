@@ -1,0 +1,37 @@
+{% extends 'catalogo/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-5 bg-artisan-bg min-vh-100 d-flex align-items-center">
+    <div class="container py-lg-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm border border-light text-center">
+                    
+                    <h2 class="brand-font display-6 mb-4">Contáctanos</h2>
+                    
+                    <form action="{% url 'contacto' %}" method="post" class="artisan-form text-start mt-4">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label small text-muted mb-1">Nombre</label>
+                            <input type="text" name="nombre" class="form-control" style="background-color: var(--artisan-bg);" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted mb-1">Correo Electrónico</label>
+                            <input type="email" name="correo" class="form-control" style="background-color: var(--artisan-bg);" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label small text-muted mb-1">Mensaje</label>
+                            <textarea name="mensaje" class="form-control" rows="4" style="background-color: var(--artisan-bg);" required></textarea>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-accent px-5">Enviar Mensaje</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

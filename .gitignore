@@ -1,0 +1,23 @@
+# Entornos virtuales
+venv/
+.venv/
+env/
+.env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Directorio de estáticos recolectados
+staticfiles/
+
+# Base de datos local
+db.sqlite3
+
+# Archivos de VS Code
+.vscode/
+
+# Media 
+# (Descomenta esto si no quieres subir las imágenes de usuario a git)
+# media/

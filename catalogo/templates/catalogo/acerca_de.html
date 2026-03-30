@@ -1,0 +1,60 @@
+{% extends 'catalogo/base.html' %}
+{% load static %}
+
+{% block title %}A cerca de nosotros - Artesanix{% endblock %}
+
+{% block content %}
+<!-- Acerca de Hero Section -->
+<section class="py-5" style="background-color: #fcf9f8; min-height: 60vh; display: flex; align-items: center;">
+    <div class="container my-5">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-lg-6 mb-5 mb-lg-0 pe-lg-5">
+                <h1 class="brand-font mb-4 text-dark" style="font-size: 3.8rem; font-weight: normal;">A cerca de nosotros</h1>
+                <p class="text-secondary lh-lg" style="font-size: 1.1rem; color: #777 !important;">
+                    Descubre la magia de México a través de sus artesanías. En Artesanix te 
+                    conectamos con las creaciones únicas de los Pueblos Mágicos del país. 
+                    Explora nuestro catálogo por destino, conoce las tradiciones detrás de cada 
+                    lugar y lleva a tu hogar piezas auténticas llenas de historia, color y cultura.
+                </p>
+            </div>
+            <div class="col-lg-5 text-center">
+                <img src="{% static 'img/logo.png' %}" alt="Artesanix Logo" class="img-fluid rounded-4 shadow-sm" style="max-height: 380px; width: 100%; object-fit: cover;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contactanos Section -->
+<section class="py-5" style="background-color: #faede9;">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-7">
+                <!-- Card Contacto -->
+                <div class="card border-0 rounded-0 shadow-sm" style="background-color: #ebdcd3;">
+                    <div class="card-body p-5 p-md-5 text-center">
+                        <h2 class="brand-font mb-5 text-dark" style="font-size: 2.8rem; font-weight: normal;">Contactanos</h2>
+                        
+                        <div class="d-flex flex-column gap-4 text-dark mx-auto" style="font-size: 1.1rem; max-width: 250px;">
+                            <!-- Teléfono -->
+                            <div class="d-flex align-items-center gap-4 text-start">
+                                <i class="fas fa-phone-alt" style="font-size: 1.4rem;"></i> 
+                                <span class="fw-medium">443-123-4567</span>
+                            </div>
+                            <!-- Email -->
+                            <div class="d-flex align-items-center gap-4 text-start">
+                                <i class="far fa-envelope" style="font-size: 1.4rem;"></i> 
+                                <span class="fw-medium">artesanix@gmial.com</span>
+                            </div>
+                            <!-- Ubicación -->
+                            <div class="d-flex align-items-center gap-4 text-start">
+                                <i class="fas fa-map-marker-alt" style="font-size: 1.4rem;"></i> 
+                                <span class="fw-medium">Morelia, Michoacán</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

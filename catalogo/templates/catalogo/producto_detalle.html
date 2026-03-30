@@ -1,0 +1,109 @@
+{% extends 'catalogo/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-5 bg-artisan-bg min-vh-100">
+    <div class="container py-lg-4">
+        <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm border border-light">
+            <div class="row g-5 align-items-center">
+                <!-- Imagen del Producto -->
+                <div class="col-lg-6">
+                    <div class="detail-img-wrapper border-0 p-0 text-center">
+                        {% if producto.fotografia %}
+                            <img src="{{ producto.fotografia.url }}" class="img-fluid rounded-2" style="max-height: 500px; object-fit: contain;" alt="{{ producto.nombre }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/800x800?text={{ producto.nombre }}" class="img-fluid rounded-2" alt="{{ producto.nombre }}">
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Información del Producto -->
+                <div class="col-lg-5 offset-lg-1">
+                    <div class="ps-lg-2">
+                        <h2 class="display-6 brand-font mb-2">{{ producto.nombre }}</h2>
+                        <p class="h3 fw-bold text-accent mb-4">${{ producto.costo }}</p>
+                        
+                        <hr class="text-muted op-25 my-4">
+                        
+                        <p class="text-muted lh-base small">Hermosa pieza de {{ producto.material }} elaborada a mano con colores tradicionales que refleja el alma de {{ producto.estado }}.</p>
+                        <!-- Usamos la descripción del backend si quieres: <p class="text-muted lh-base small">{{ producto.descripcion }}</p> -->
+                        
+                        <hr class="text-muted op-25 my-4">
+                        
+                        <div class="mb-5 small text-muted">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">Material: <span class="text-artisan-text">{{ producto.material }}</span></li>
+                                <li class="mb-0">Origen: <span class="text-artisan-text">{{ producto.municipio_origen.nombre }}, {{ producto.estado }}</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            {% if es_favorito %}
+                            <a href="{% url 'toggle_favorito' producto.pk %}" class="btn btn-outline-danger btn-lg d-flex align-items-center justify-content-center" style="border-width: 2px;">
+                                <i class="fas fa-heart text-heart me-2"></i> Quitar de Favoritos
+                            </a>
+                            {% else %}
+                            <a href="{% url 'toggle_favorito' producto.pk %}" class="btn btn-accent btn-lg text-white d-flex align-items-center justify-content-center">
+                                <i class="far fa-heart me-2"></i> Agregar a Favoritos
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Comentarios (Blog) -->
+<section class="py-5 bg-white">
+    <div class="container py-lg-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h3 class="mb-4 brand-font border-bottom pb-2">Comentarios del Producto</h3>
+                
+                <!-- Formulario de comentarios -->
+                <div class="card mb-5 shadow-sm border-0 bg-artisan-bg">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold mb-3 text-accent"><i class="far fa-comment-dots me-2"></i>Deja tu comentario</h5>
+                        <form method="post" action="{% url 'producto_detalle' producto.pk %}" class="artisan-form">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small text-muted mb-1">Nombre</label>
+                                    <input type="text" name="nombre" class="form-control" style="background-color: #fff;" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small text-muted mb-1">Correo Electrónico</label>
+                                    <input type="email" name="correo" class="form-control" style="background-color: #fff;" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small text-muted mb-1">Mensaje</label>
+                                <textarea name="mensaje" class="form-control" rows="3" style="background-color: #fff;" required></textarea>
+                            </div>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-accent px-4">Enviar Comentario</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                {% for comentario in comentarios %}
+                    <div class="card mb-4 shadow-sm border-0 bg-artisan-bg">
+                        <div class="card-body p-4">
+                            <h5 class="card-title text-accent fw-bold">{{ comentario.nombre }}</h5>
+                            <h6 class="card-subtitle mb-3 text-muted small"><i class="far fa-clock me-1"></i> {{ comentario.fecha_envio|date:"d M Y, H:i" }}</h6>
+                            <p class="card-text text-secondary mb-0">{{ comentario.mensaje }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="alert alert-light text-center border py-4" role="alert">
+                        <p class="mb-0 text-muted"><i class="far fa-comment-dots me-2"></i> Aún no hay comentarios para este producto. ¡Sé el primero en compartir tu opinión en la página de <a href="{% url 'contacto' %}" class="text-accent text-decoration-none fw-bold">Contacto</a>!</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

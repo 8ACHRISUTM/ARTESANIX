@@ -1,0 +1,83 @@
+{% extends 'catalogo/base.html' %}
+
+{% block content %}
+<section class="py-5 bg-artisan-bg min-vh-100">
+    <div class="container py-lg-4">
+        <!-- Encabezado Admin -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
+            <div>
+                <h2 class="display-6 brand-font text-artisan-dark mb-2">Gestión de Catálogo</h2>
+                <p class="text-muted mb-0">Administra las artesanías y piezas maestras.</p>
+            </div>
+            <a href="{% url 'admin_crear' %}" class="btn btn-accent px-4 py-2 shadow-sm d-flex align-items-center">
+                <i class="fas fa-plus me-2"></i> Nueva Pieza
+            </a>
+        </div>
+
+        <!-- Tabla estilo tarjeta -->
+        <div class="bg-white p-4 p-lg-5 rounded-4 shadow-sm border border-light">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--border-light);">
+                            <th class="ps-2 py-3 border-0 text-muted small text-uppercase ls-wide">Producto</th>
+                            <th class="py-3 border-0 text-muted small text-uppercase ls-wide">Origen</th>
+                            <th class="py-3 border-0 text-muted small text-uppercase ls-wide text-center">Costo</th>
+                            <th class="pe-2 py-3 border-0 text-muted small text-uppercase ls-wide text-end">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="border-top-0">
+                        {% for p in productos %}
+                        <tr style="border-bottom: 1px solid var(--border-light);">
+                            <td class="ps-2 py-4 border-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-4 overflow-hidden rounded-3 shadow-sm border border-light flex-shrink-0" style="width: 60px; height: 60px; background-color: var(--artisan-bg);">
+                                        {% if p.fotografia %}
+                                            <img src="{{ p.fotografia.url }}" alt="{{ p.nombre }}" class="w-100 h-100" style="object-fit: cover;">
+                                        {% else %}
+                                            <div class="w-100 h-100 d-flex align-items-center justify-content-center text-accent">
+                                                <i class="fas fa-image"></i>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <span class="fw-bold text-artisan-dark d-block mb-1" style="font-size: 1.1rem;">{{ p.nombre }}</span>
+                                        <span class="badge" style="background-color: var(--artisan-bg); color: var(--artisan-text); border: 1px solid var(--border-light); font-weight: normal;">
+                                            {{ p.categoria.nombre|default:"Categoría general" }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-muted border-0">{{ p.municipio_origen.nombre }}, {{ p.estado }}</td>
+                            <td class="text-center border-0">
+                                <span class="fw-bold text-accent px-3 py-1 rounded-pill d-inline-block" style="background-color: #fffaf7; border: 1px solid rgba(200,90,36,0.2); font-size: 0.95rem;">
+                                    ${{ p.costo }}
+                                </span>
+                            </td>
+                            <td class="pe-2 text-end border-0">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a href="{% url 'admin_editar' p.pk %}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; border-color: var(--border-light);" title="Editar">
+                                        <i class="fas fa-pen text-artisan-text"></i>
+                                    </a>
+                                    <a href="{% url 'admin_eliminar' p.pk %}" class="btn btn-outline-danger d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; border-color: var(--border-light);" onclick="return confirm('¿Seguro que deseas eliminar esta pieza permanentemente?')" title="Eliminar">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-5 border-0">
+                                <div class="text-muted mb-3"><i class="fas fa-box-open display-4 opacity-25"></i></div>
+                                <h5 class="text-artisan-dark brand-font">El catálogo está vacío</h5>
+                                <p class="text-muted">Aún no has registrado ninguna artesanía.</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
