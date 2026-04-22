@@ -1,5 +1,32 @@
 from django.db import models
 from django.contrib.auth.models import User
+from PIL import Image
+import io
+import os
+from django.core.files.base import ContentFile
+
+
+def _convertir_webp(image_field, max_ancho=1200, max_alto=1200, calidad=82):
+    """Convierte un ImageField a WebP comprimido y redimensionado."""
+    if not image_field:
+        return
+    try:
+        img = Image.open(image_field)
+        # Convertir a RGB (necesario para WebP, elimina canal alpha si existe)
+        img = img.convert('RGB')
+        # Redimensionar manteniendo proporción si es demasiado grande
+        img.thumbnail((max_ancho, max_alto), Image.LANCZOS)
+        # Guardar como WebP en memoria
+        output = io.BytesIO()
+        img.save(output, format='WEBP', quality=calidad, method=6)
+        output.seek(0)
+        # Construir el nuevo nombre con extensión .webp
+        base_name = os.path.splitext(os.path.basename(image_field.name))[0]
+        nuevo_nombre = f"{base_name}.webp"
+        image_field.save(nuevo_nombre, ContentFile(output.read()), save=False)
+    except Exception:
+        pass  # Si falla la conversión, dejamos la imagen original
+
 
 # Modelo para registrar la información de los Pueblos Mágicos
 class PuebloMagico(models.Model): # Define la estructura de nuestra tabla PuebloMagico
@@ -9,6 +36,12 @@ class PuebloMagico(models.Model): # Define la estructura de nuestra tabla Pueblo
     historia = models.TextField(null=True, blank=True) # Texto largo
     ubicacion = models.CharField(max_length=255, null=True, blank=True)
     descripcion_cultural = models.TextField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        # Si se subió una imagen nueva que no es WebP, convertirla
+        if self.imagen and not self.imagen.name.endswith('.webp'):
+            _convertir_webp(self.imagen, max_ancho=900, max_alto=600)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.nombre # Indica que se mostrará el nombre como valor al imprimir este objeto
@@ -30,6 +63,12 @@ class Producto(models.Model):
     costo = models.DecimalField(max_digits=10, decimal_places=2) # Campo numérico con decimales
     material = models.CharField(max_length=100)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE) # Llave foránea (relación con Categoria)
+
+    def save(self, *args, **kwargs):
+        # Si se subió una imagen nueva que no es WebP, convertirla
+        if self.fotografia and not self.fotografia.name.endswith('.webp'):
+            _convertir_webp(self.fotografia, max_ancho=800, max_alto=800)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.nombre
