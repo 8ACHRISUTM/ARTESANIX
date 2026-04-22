@@ -4,13 +4,13 @@
 {% block content %}
 <!-- Hero Section Premium -->
 <section class="w-100 overflow-hidden">
-    <img src="{% static 'img/hero_banner.png' %}" class="w-100 d-block" style="object-fit: cover; max-height: 55vh;" alt="Artesanix Heritage">
+    <img src="{% static 'img/hero_banner.png' %}" class="w-100 d-block" style="object-fit: cover; max-height: 55vh;" alt="Artesanix Heritage" width="1920" height="600" fetchpriority="high">
 </section>
 
 <!-- Pueblos Mágicos Section -->
 <section class="py-5 bg-artisan-bg pb-5 mb-5">
     <div class="container py-lg-4">
-        <h2 class="display-6 brand-font text-center text-artisan-dark mb-5 border-0">Pueblos Mágicos</h2>
+        <h1 class="display-6 brand-font text-center text-artisan-dark mb-5 border-0">Pueblos Mágicos</h1>
         
         <div class="row g-4 justify-content-center">
             {% for p in pueblos %}
@@ -19,13 +19,13 @@
                     <div class="shadow-sm border border-light bg-white rounded-2 overflow-hidden text-center h-100 transition-hover">
                         <div style="height: 160px; overflow: hidden;">
                             {% if p.imagen %}
-                                <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="w-100 h-100" style="object-fit: cover;">
+                                <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="w-100 h-100" style="object-fit: cover;" width="400" height="200" loading="lazy">
                             {% else %}
-                                <img src="{% static 'img/default-pueblo.jpg' %}" alt="{{ p.nombre }}" class="w-100 h-100" style="object-fit: cover;">
+                                <img src="{% static 'img/default-pueblo.jpg' %}" alt="{{ p.nombre }}" class="w-100 h-100" style="object-fit: cover;" width="400" height="200" loading="lazy">
                             {% endif %}
                         </div>
                         <div class="p-3">
-                            <h5 class="mb-0 fs-6 text-truncate" style="font-size: 0.95rem;">{{ p.nombre }}</h5>
+                            <h2 class="mb-0 fs-6 text-truncate" style="font-size: 0.95rem;">{{ p.nombre }}</h2>
                         </div>
                     </div>
                 </a>

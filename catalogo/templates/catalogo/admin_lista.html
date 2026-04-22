@@ -6,7 +6,7 @@
         <!-- Encabezado Admin -->
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
             <div>
-                <h2 class="display-6 brand-font text-artisan-dark mb-2">Gestión de Catálogo</h2>
+                <h1 class="display-6 brand-font text-artisan-dark mb-2">Gestión de Catálogo</h1>
                 <p class="text-muted mb-0">Administra las artesanías y piezas maestras.</p>
             </div>
             <a href="{% url 'admin_crear' %}" class="btn btn-accent px-4 py-2 shadow-sm d-flex align-items-center">
@@ -33,7 +33,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="me-4 overflow-hidden rounded-3 shadow-sm border border-light flex-shrink-0" style="width: 60px; height: 60px; background-color: var(--artisan-bg);">
                                         {% if p.fotografia %}
-                                            <img src="{{ p.fotografia.url }}" alt="{{ p.nombre }}" class="w-100 h-100" style="object-fit: cover;">
+                                            <img src="{{ p.fotografia.url }}" alt="{{ p.nombre }}" class="w-100 h-100" style="object-fit: cover;" width="60" height="60" loading="lazy">
                                         {% else %}
                                             <div class="w-100 h-100 d-flex align-items-center justify-content-center text-accent">
                                                 <i class="fas fa-image"></i>
@@ -69,7 +69,7 @@
                         <tr>
                             <td colspan="4" class="text-center py-5 border-0">
                                 <div class="text-muted mb-3"><i class="fas fa-box-open display-4 opacity-25"></i></div>
-                                <h5 class="text-artisan-dark brand-font">El catálogo está vacío</h5>
+                                <h2 class="text-artisan-dark brand-font h5">El catálogo está vacío</h2>
                                 <p class="text-muted">Aún no has registrado ninguna artesanía.</p>
                             </td>
                         </tr>

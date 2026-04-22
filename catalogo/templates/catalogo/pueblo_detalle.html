@@ -9,7 +9,7 @@
             <div class="col-lg-6">
                 <div class="detail-img-wrapper shadow-sm">
                     {% if pueblo.imagen %}
-                        <img src="{{ pueblo.imagen.url }}" class="img-fluid w-100" alt="{{ pueblo.nombre }}">
+                        <img src="{{ pueblo.imagen.url }}" class="img-fluid w-100" alt="{{ pueblo.nombre }}" width="800" height="400" fetchpriority="high">
                     {% endif %}
                 </div>
             </div>
@@ -32,12 +32,12 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="mb-5">
-                    <h3 class="mb-4 section-title">Nuestra Historia</h3>
+                    <h2 class="mb-4 section-title h3">Nuestra Historia</h2>
                     <p class="lh-lg text-secondary">{{ pueblo.historia|default:"La historia de este pueblo mágico está llena de color y tradición ancestral." }}</p>
                 </div>
                 
                 <div class="mb-5">
-                    <h3 class="mb-4 section-title">Esencia Cultural</h3>
+                    <h2 class="mb-4 section-title h3">Esencia Cultural</h2>
                     <p class="lh-lg text-secondary">{{ pueblo.descripcion_cultural|default:"Descubre la riqueza cultural y las técnicas artesanales que definen a esta región." }}</p>
                 </div>
             </div>
@@ -58,12 +58,12 @@
                 <div class="product-card h-100">
                     <div class="img-container">
                         {% if p.fotografia %}
-                            <img src="{{ p.fotografia.url }}" alt="{{ p.nombre }}">
+                            <img src="{{ p.fotografia.url }}" alt="{{ p.nombre }}" width="400" height="400" loading="lazy">
                         {% endif %}
                     </div>
                     <div class="card-body">
                         <a href="{% url 'producto_detalle' p.pk %}" class="text-decoration-none stretched-link">
-                            <h5 class="mb-1 fw-bold text-artisan-dark fs-6">{{ p.nombre }}</h5>
+                            <h3 class="mb-1 fw-bold text-artisan-dark fs-6">{{ p.nombre }}</h3>
                         </a>
                         <p class="product-price mb-0">${{ p.costo }}</p>
                     </div>

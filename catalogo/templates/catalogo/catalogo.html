@@ -6,7 +6,7 @@
 {% block content %}
 <!-- Banner Colección -->
 <section class="position-relative text-center d-flex align-items-center justify-content-center" style="height: 35vh; min-height: 250px; overflow: hidden;">
-    <img src="/media/productos/Gemini_Generated_Image_llcgv8llcgv8llcg.png" class="position-absolute w-100 h-100 top-0 start-0" style="object-fit: cover; filter: brightness(0.65);" alt="Fondo Colección">
+    <img src="/media/productos/Gemini_Generated_Image_llcgv8llcgv8llcg.png" class="position-absolute w-100 h-100 top-0 start-0" style="object-fit: cover; filter: brightness(0.65);" alt="Fondo Colección" width="1920" height="400" fetchpriority="high">
     
     <div class="position-relative z-1">
         <h1 class="display-4 brand-font text-white mb-0" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.5);">Nuestra Colección</h1>
@@ -23,11 +23,11 @@
                 <div class="col-md-4">
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0 text-muted"><i class="fas fa-search"></i></span>
-                        <input type="text" name="q" class="form-control border-start-0 ps-0" placeholder="Buscar..." value="{% if q %}{{ q }}{% endif %}">
+                        <input type="text" name="q" class="form-control border-start-0 ps-0" placeholder="Buscar..." value="{% if q %}{{ q }}{% endif %}" aria-label="Buscar productos">
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <select name="pueblo" class="form-select text-muted">
+                    <select name="pueblo" class="form-select text-muted" aria-label="Filtrar por Pueblo Mágico">
                         <option value="">Filtra por: Pueblo Mágico</option>
                         {% for p in pueblos %}
                         <option value="{{ p.id }}" {% if p.id == pueblo_sel %}selected{% endif %}>{{ p.nombre }}</option>
@@ -35,7 +35,7 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <select name="categoria" class="form-select text-muted">
+                    <select name="categoria" class="form-select text-muted" aria-label="Filtrar por Categoría">
                         <option value="">Categoría</option>
                         {% for c in categorias %}
                         <option value="{{ c.id }}" {% if c.id == cat_sel %}selected{% endif %}>{{ c.nombre }}</option>
@@ -43,7 +43,7 @@
                     </select>
                 </div>
                 <div class="col-md-2 d-grid">
-                    <button type="submit" class="btn btn-accent px-0"><i class="fas fa-filter text-white"></i></button>
+                    <button type="submit" class="btn btn-accent px-0" aria-label="Aplicar filtros"><i class="fas fa-filter text-white"></i></button>
                 </div>
             </form>
         </div>
@@ -56,9 +56,9 @@
                     <div class="product-card h-100 position-relative">
                         <div class="img-container">
                             {% if p.fotografia %}
-                                <img src="{{ p.fotografia.url }}" alt="{{ p.nombre }}">
+                                <img src="{{ p.fotografia.url }}" alt="{{ p.nombre }}" width="400" height="400" loading="lazy">
                             {% else %}
-                                <img src="https://via.placeholder.com/400x400?text={{ p.nombre }}" alt="{{ p.nombre }}">
+                                <img src="https://via.placeholder.com/400x400?text={{ p.nombre }}" alt="{{ p.nombre }}" width="400" height="400" loading="lazy">
                             {% endif %}
                         </div>
                         
@@ -69,7 +69,7 @@
                         
                         <div class="card-body px-3 py-3 text-start bg-white">
                             <a href="{% url 'producto_detalle' p.pk %}" class="text-decoration-none stretched-link">
-                                <h5 class="mb-1 fw-bold text-artisan-dark fs-6">{{ p.nombre }}</h5>
+                                <h2 class="mb-1 fw-bold text-artisan-dark fs-6">{{ p.nombre }}</h2>
                             </a>
                             <p class="product-price mb-0">${{ p.costo }}</p>
                         </div>
@@ -78,7 +78,7 @@
                 {% endfor %}
             {% else %}
                 <div class="col-12 py-5 text-center">
-                    <h4 class="text-secondary">No encontramos productos con esos filtros.</h4>
+                    <h2 class="text-secondary fs-4">No encontramos productos con esos filtros.</h2>
                     <p class="text-muted">Intenta con otros términos o pueblos.</p>
                     <a href="{% url 'catalogo' %}" class="btn btn-outline-accent rounded-pill px-4 mt-2">Limpiar filtros</a>
                 </div>
