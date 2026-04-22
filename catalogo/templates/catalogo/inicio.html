@@ -1,6 +1,9 @@
 {% extends 'catalogo/base.html' %}
 {% load static %}
 
+{% block head_extra %}
+<link rel="preload" as="image" href="{% static 'img/hero_banner.png' %}" fetchpriority="high">
+{% endblock %}
 {% block content %}
 <!-- Hero Section Premium -->
 <section class="w-100 overflow-hidden">
