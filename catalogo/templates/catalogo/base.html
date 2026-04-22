@@ -12,34 +12,29 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
-    <!-- CSS crítico inline (fondo y body base antes de que cargue Bootstrap) -->
+    <!-- CSS inline mínimo: solo previene flash de fondo blanco antes de que cargue todo -->
     <style>
-        :root{--artisan-bg:#f8f5f0;--artisan-dark:#4b3621;--artisan-text:#5d4037;--accent:#a84318;--accent-hover:#8f340d;--border-light:#e6dfd5}
-        body{font-family:system-ui,sans-serif;background-color:var(--artisan-bg);color:var(--artisan-text);margin:0}
-        .navbar{background-color:var(--artisan-bg);border-bottom:1px solid var(--border-light);padding:1.2rem 0}
+        body{background-color:#f8f5f0;margin:0}
         main{min-height:100vh}
-        .min-vh-100{min-height:100vh}
-        .container{width:100%;padding-right:1rem;padding-left:1rem;margin-right:auto;margin-left:auto}
-        img{max-width:100%;height:auto}
     </style>
 
-    <!-- Bootstrap CSS — SÍNCRONO (evita CLS al mantener el layout estable) -->
+    <!-- Bootstrap CSS — SÍNCRONO -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- artisan.css — carga asíncrona (pequeño, bajo impacto en CLS) -->
-    <link rel="preload" href="{% static 'css/artisan.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="{% static 'css/artisan.css' %}"></noscript>
+    <!-- artisan.css — SÍNCRONO (2KB, mismo dominio, caché Whitenoise = mínimo impacto) -->
+    <link rel="stylesheet" href="{% static 'css/artisan.css' %}">
 
-    <!-- Font Awesome — carga asíncrona (solo iconos, no afecta layout) -->
+    <!-- Font Awesome — async (solo iconos decorativos, sin impacto en layout) -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
-    <!-- Google Fonts — carga asíncrona con font-display:swap -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"></noscript>
+    <!-- Google Fonts — display=optional: sin swap de fuente = sin CLS por tipografía -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:wght@700&display=optional" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:wght@700&display=optional" rel="stylesheet"></noscript>
 
     <!-- Bloque para preload de LCP por página -->
     {% block head_extra %}{% endblock %}
+
 
 
 
